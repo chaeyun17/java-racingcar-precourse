@@ -1,6 +1,5 @@
-package racinggame;
+package racinggame.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import racinggame.model.Car;
@@ -8,16 +7,27 @@ import racinggame.model.CarDriveHistory;
 import racinggame.model.Judgement;
 import racinggame.model.Race;
 import racinggame.model.RaceCars;
+import racinggame.util.GameUtils;
+import racinggame.view.GameView;
 
 public class GameController {
 
+	private final GameView gameView;
+
+	public GameController() {
+		this.gameView = new GameView();
+	}
+
 	public void start() {
-		int turnCount = 3;
-		Race race = new Race(3);
-		List<String> carNames = new ArrayList<>();
-		carNames.add("CAR001");
-		carNames.add("CAR002");
-		carNames.add("CAR003");
+		// 자동차 이름 입력
+		String carNamesStr = gameView.getCarNames();
+		List<String> carNames = GameUtils.parseCarNameString(carNamesStr);
+
+		String driveTurnCntStr = gameView.getDriveCount();
+		int driveTurnCnt = GameUtils.parseDriveTurnCntString(driveTurnCntStr);
+
+		Race race = new Race(driveTurnCnt);
+
 		RaceCars cars = race.start(carNames);
 		RaceCars winners = Judgement.getInstance().getWinners(cars);
 		System.out.println("실행 결과");
@@ -46,4 +56,5 @@ public class GameController {
 		msg += " 입니다.";
 		return msg;
 	}
+
 }
