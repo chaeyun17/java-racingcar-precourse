@@ -8,13 +8,21 @@ import racinggame.dto.DriveResultDto;
 
 public class GameView {
 
+	private final static String INPUT_MSG_CAR_NAMES =
+		"경주할 자동차 이름을 입력하세요.(이름은쉼표(,)기준으로구분)";
+	private final static String INPUT_MSG_DRIVE_COUNT =
+		"시도할 회수는 몇회인가요?";
+	private final static String ERROR_MSG_INVALID_INPUT_CAR_NAMES =
+		"[ERROR] 자동차 이름이 잘못되었습니다. 다시 입력해주세요. ";
+	private final static String FORWARD_MARKER = "-";
+
 	public String getCarNames() {
-		System.out.println("경주할 자동차 이름을 입력하세요.(이름은쉼표(,)기준으로구분)");
+		System.out.println(INPUT_MSG_CAR_NAMES);
 		return Console.readLine();
 	}
 
 	public String getDriveCount() throws NoSuchElementException {
-		System.out.println("시도할 회수는 몇회인가요?");
+		System.out.println(INPUT_MSG_DRIVE_COUNT);
 		return Console.readLine();
 	}
 
@@ -29,7 +37,7 @@ public class GameView {
 	private String getForwardString(int forwardCnt) {
 		StringBuilder forwardString = new StringBuilder();
 		for (int i = 0; i < forwardCnt; i++) {
-			forwardString.append("-");
+			forwardString.append(FORWARD_MARKER);
 		}
 		return forwardString.toString();
 	}
@@ -47,11 +55,7 @@ public class GameView {
 		return msg;
 	}
 
-	public void showError(NoSuchElementException e) {
-		System.out.println("[ERROR] 입력 중 에러가 발생했습니다.");
-	}
-
 	public void showInvalidCarNameInput(String carNamesStr) {
-		System.out.println("[ERROR] 자동차 이름이 잘못되었습니다. 다시 입력해주세요. ");
+		System.out.println(ERROR_MSG_INVALID_INPUT_CAR_NAMES);
 	}
 }

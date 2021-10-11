@@ -2,7 +2,6 @@ package racinggame.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import racinggame.dto.DriveResultDto;
 import racinggame.model.Car;
@@ -33,12 +32,7 @@ public class GameController {
 		} while (isInvalid);
 
 		List<String> carNames = GameUtils.parseCarNameString(carNamesStr);
-		String driveTurnCntStr = "";
-		try {
-			driveTurnCntStr = gameView.getDriveCount();
-		} catch (NoSuchElementException e) {
-			gameView.showError(e);
-		}
+		String driveTurnCntStr = gameView.getDriveCount();
 		int driveTurnCnt = GameUtils.parseDriveTurnCntString(driveTurnCntStr);
 
 		Race race = new Race(driveTurnCnt);
@@ -52,8 +46,9 @@ public class GameController {
 	private List<DriveResultDto> mapTo(RaceCars raceCars) {
 		List<DriveResultDto> dtoList = new ArrayList<>();
 		for (Car car : raceCars.getCars()) {
-			dtoList.add(new DriveResultDto(car.getName(),
-				car.getCarDriveHistory().getForwardTotal()));
+			DriveResultDto dto = new DriveResultDto(car.getName(),
+				car.getCarDriveHistory().getForwardTotal());
+			dtoList.add(dto);
 		}
 		return dtoList;
 	}
