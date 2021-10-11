@@ -1,15 +1,15 @@
 package racinggame.model;
 
+import static org.assertj.core.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.*;
 
 class CarTest {
 
 	@Test
 	@DisplayName("주어진 이름으로 차를 생성하면, 이름을 확인할 수 있어야 한다")
-	void initTest(){
+	void initTest() {
 		String name = "CAR001";
 
 		Car car = new Car(name);
@@ -28,7 +28,7 @@ class CarTest {
 		driveTest(9, DriveStatus.FORWARD);
 	}
 
-	private void driveTest(int numberPicked, DriveStatus expected){
+	private void driveTest(int numberPicked, DriveStatus expected) {
 		String name = "CAR001";
 		Car car = new Car(name);
 		DriveStatus driveStatus = car.drive(numberPicked);

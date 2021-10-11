@@ -1,13 +1,13 @@
 package racinggame.model;
 
-import nextstep.utils.Randoms;
-
 public class Car {
 
-	private String name;
+	private final String name;
+	private final CarDriveHistory carDriveHistory;
 
 	public Car(String name) {
 		this.name = name;
+		this.carDriveHistory = new CarDriveHistory();
 	}
 
 	public String getName() {
@@ -16,14 +16,17 @@ public class Car {
 
 	public DriveStatus drive(int numberPicked) {
 		if (numberPicked >= 4) {
-			return DriveStatus.FORWARD;
+			DriveStatus forward = DriveStatus.FORWARD;
+			carDriveHistory.add(forward);
+			return forward;
 		}
-		return DriveStatus.STOP;
+		DriveStatus stop = DriveStatus.STOP;
+		carDriveHistory.add(stop);
+		return stop;
 	}
 
-	public DriveStatus drive() {
-		int numberPicked = Randoms.pickNumberInRange(0, 9);
-		return drive(numberPicked);
+	public CarDriveHistory getCarDriveHistory() {
+		return this.carDriveHistory;
 	}
 
 }
