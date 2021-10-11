@@ -50,4 +50,8 @@ public class GameView {
 	public void showError(NoSuchElementException e) {
 		System.out.println("[ERROR] 입력 중 에러가 발생했습니다.");
 	}
+
+	public void showInvalidCarNameInput(String carNamesStr) {
+		System.out.println("[ERROR] 자동차 이름이 잘못되었습니다. 다시 입력해주세요. ");
+	}
 }

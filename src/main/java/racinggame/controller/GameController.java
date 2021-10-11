@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 
 import racinggame.dto.DriveResultDto;
 import racinggame.model.Car;
+import racinggame.model.GameValidator;
 import racinggame.model.Judgement;
 import racinggame.model.Race;
 import racinggame.model.RaceCars;
@@ -15,13 +16,22 @@ import racinggame.view.GameView;
 public class GameController {
 
 	private final GameView gameView;
+	private final GameValidator gameValidator;
 
 	public GameController() {
 		this.gameView = new GameView();
+		this.gameValidator = new GameValidator();
 	}
 
 	public void start() {
-		String carNamesStr = gameView.getCarNames();
+		boolean isInvalid;
+		String carNamesStr;
+		do {
+			carNamesStr = gameView.getCarNames();
+			isInvalid = gameValidator.isInvalidCarNameInput(carNamesStr);
+			showErrorIfInvalidInput(isInvalid, carNamesStr);
+		} while (isInvalid);
+
 		List<String> carNames = GameUtils.parseCarNameString(carNamesStr);
 		String driveTurnCntStr = "";
 		try {
@@ -46,6 +56,12 @@ public class GameController {
 				car.getCarDriveHistory().getForwardTotal()));
 		}
 		return dtoList;
+	}
+
+	private void showErrorIfInvalidInput(boolean isInvalid, String carNamesStr) {
+		if (isInvalid) {
+			gameView.showInvalidCarNameInput(carNamesStr);
+		}
 	}
 
 }
