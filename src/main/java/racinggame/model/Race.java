@@ -1,7 +1,6 @@
 package racinggame.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import nextstep.utils.Randoms;
 
@@ -13,29 +12,29 @@ public class Race {
 		this.turnCount = turnCount;
 	}
 
-	public Set<Car> start(Set<String> carNames) {
-		Set<Car> cars = createCars(carNames);
-		playTurns(cars, this.turnCount);
-		return cars;
+	public RaceCars start(List<String> carNames) {
+		RaceCars raceCars = createCars(carNames);
+		playTurns(raceCars, this.turnCount);
+		return raceCars;
 	}
 
-	public Set<Car> createCars(Set<String> names) {
-		Set<Car> cars = new HashSet<>();
+	public RaceCars createCars(List<String> names) {
+		RaceCars raceCars = new RaceCars();
 		for (String name : names) {
-			cars.add(new Car(name));
+			raceCars.add(new Car(name));
 		}
-		return cars;
+		return raceCars;
 	}
 
-	public void playTurns(Set<Car> cars, int turnCount) {
+	public void playTurns(RaceCars cars, int turnCount) {
 		for (int i = 0; i < turnCount; i++) {
 			driveCars(cars);
 		}
 	}
 
-	private void driveCars(Set<Car> cars) {
-		for (Car car : cars) {
-			car.drive(getRandomNumber());
+	private void driveCars(RaceCars cars) {
+		for (String carName : cars.getNames()) {
+			cars.get(carName).drive(getRandomNumber());
 		}
 	}
 
